@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+    {% load static %}
+<head>
+    <title>Sentences</title>
+    <div id="alert" class="alert"></div>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css"/>
+</head>
+<body>
+    <table id="sentence_table">
+        <thead>
+            <tr>
+                <th>Sentences</th>
+                <th>Translations</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sentence in sentences%}
+            <tr>
+                <td class = "sentences">{{ sentence }}</td>
+                {% if translated_sent %}
+                <td class="translated_sentences">{{ translated_sent }}</td>
+                {% else %}
+                <td><input type="text" name="translations" id = "translations"></td>
+                {% endif %}
+
+                <input type="hidden" name="project_id" id = "project_id" value="{{ project_id }}">
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <button id="save-btn">Save</button>
+    <a href="{% url 'home' %}">Home</a>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#sentence_table').DataTable();
+        });
+    </script>
+    <!-- Include jQuery in your template -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Add an event listener to the Save button to send the updated data to the server -->
+{% csrf_token %}
+<script>
+
+    $(document).ready(function() {
+        $('#save-btn').click(function() {
+
+            var translations = [];
+            var sentences = [];
+            var proj_id = '{{ project_id }}';
+
+            $('#sentence_table tbody tr').each(function() {
+                var translation = $(this).find('#translations').val();
+                translations.push(translation);
+            });
+
+            $(".sentences").each(function() {
+                const sent = $(this).text() 
+                sentences.push(sent);
+                });
+
+            console.log(translations);
+            console.log(proj_id);
+            console.log(sentences);
+
+            $.ajax({
+                type:'POST',
+                url: '{% url "save_translations" %}',
+                data: JSON.stringify({
+                    'translations': translations,
+                    'sentences': sentences,
+                    'proj_id': proj_id,                    
+                }),
+                dataType: 'json',
+                contentType: "application/json",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                success: function(data) {
+                    alert('Translations saved successfully!');
+                    window.location.href = '{% url "home" %}';
+                },
+                error: function() {
+                    alert('An error occurred while saving translations.');
+                    window.location.href = '{% url "home" %}';
+                }
+            });
+        });
+   
+   
+   });
+</script>
+</script>
+
+
+</body>
+</html>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #333;
+        background-color: #f8f8f8;
+        padding: 20px;
+    }
+    h1 {
+		margin-bottom: 20px;
+	}
+
+	table {
+		border-collapse: collapse;
+		width: 100%;
+		max-width: 1000px;
+		margin-bottom: 20px;
+	}
+
+	table th,
+	table td {
+		padding: 10px;
+		border: 1px solid #ccc;
+		text-align: left;
+	}
+
+	table th {
+		background-color: #f2f2f2;
+		font-weight: bold;
+	}
+
+	input[type="text"] {
+		padding: 5px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		width: 100%;
+		max-width: 400px;
+		box-sizing: border-box;
+		margin-bottom: 5px;
+	}
+
+	button {
+		background-color: #4CAF50;
+		color: white;
+		padding: 10px 20px;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		font-size: 16px;
+		margin-right: 10px;
+	}
+
+	button:hover {
+		background-color: #3e8e41;
+	}
+
+	a {
+		color: #007bff;
+		text-decoration: none;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+
+	.alert {
+		padding: 10px;
+		margin-bottom: 20px;
+		border: 1px solid transparent;
+		border-radius: 4px;
+		font-size: 16px;
+		font-weight: bold;
+		text-align: center;
+	}
+
+	.alert-success {
+		background-color: #dff0d8;
+		border-color: #d6e9c6;
+		color: #3c763d;
+	}
+
+	.alert-danger {
+		background-color: #f2dede;
+		border-color: #ebccd1;
+		color: #a94442;
+	}
+</style>

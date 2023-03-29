@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    {% load static %}
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+
+
+      </head>
+<body>
+   
+<div>
+    <form method="POST" action="{% url 'submit' %}">
+        {% csrf_token %}
+        <label for="article-title">Wikipedia Article Title:</label><br>
+        <input type="text" id="article-title" name="article-title"><br>
+        <br><br>
+        <label for="target-language">Target Language to Translate:</label><br>
+        <select id="target-language" name="target-language">
+        <option value="bn">Bengali</option>
+        <option value="gu">Gujarati</option>
+        <option value="hi">Hindi</option>
+        <option value="kn">Kannada</option>
+        <option value="ml">Malayalam</option>
+        <option value="mr">Marathi</option>
+        <option value="ne">Nepali</option>
+        <option value="or">Oriya</option>
+        <option value="pa">Punjabi</option>
+        <option value="si">Sinhala</option>
+        <option value="ta">Tamil</option>
+        <option value="te">Telugu</option>
+        <option value="ur">Urdu</option>
+        </select><br>
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+        <div class="form-buttons">
+        <button class="dashboard" id="dashboard">Back To Dashboard</button>
+        </div>       
+</div>
+   
+   
+
+</body>
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" id="close"></button>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+</html>
+
+<script>
+    $(document).ready(function() {
+        $('#close').click(function() {
+            window.location.href = '{% url "home" %}';
+        })
+        $('#dashboard').click(function() {
+            window.location.href = '{% url "dashboard" %}';
+        })
+    })
+</script>
+<style>
+
+
+    button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.form-buttons {
+    display: flex;
+    /* justify-content: space-between; */
+    margin-top: 0px;
+    margin-left: 800px;
+}
+</style>

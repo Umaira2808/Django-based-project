@@ -1,0 +1,102 @@
+        /* Style for the form container */
+        form {
+            margin: 50px auto;
+            width: 500px;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            font-family: Arial, sans-serif;
+            }
+    
+            /* Style for the labels */
+            label {
+            display: block;
+            margin-bottom: 10px;
+            }
+    
+            /* Style for the text input */
+            input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            }
+    
+            /* Style for the select dropdown */
+            select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            }
+    
+            /* Style for the submit button */
+            input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            }
+    
+            /* Style for the submit button on hover */
+            input[type=submit]:hover {
+            background-color: #45a049;
+            }
+            
+            .container {
+                    display: flex;
+                    flex-direction: row;
+                  }
+                  
+                  .left-pane {
+                    flex: 1;
+                    margin-right: 20px;
+                  }
+                  
+                  .right-pane {
+                    flex: 1;
+                  }
+                  
+                  ul {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                  }
+                  
+                  li {
+                    margin-bottom: 10px;
+                  }
+                  
+                  label {
+                    display: block;
+                    margin-bottom: 5px;
+                    font-weight: bold;
+                  }
+                  
+                  input[type="text"] {
+                    width: 100%;
+                    padding: 5px;
+                    border-radius: 5px;
+                    border: 1px solid #ccc;
+                    margin-bottom: 10px;
+                  }
+                  
+                  button[type="submit"] {
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    background-color: #4CAF50;
+                    color: #fff;
+                    border: none;
+                    cursor: pointer;
+                  }
+                  
+                  button[type="submit"]:hover {
+                    background-color: #3E8E41;
+                  }
+                  
